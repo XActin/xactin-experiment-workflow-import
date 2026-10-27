@@ -1,0 +1,20 @@
+{
+  "nodes": [
+    { "id": "n1", "code": "cell_revival", "position": { "x": 90, "y": 180 } },
+    { "id": "n2", "code": "cell_culture", "position": { "x": 345, "y": 180 } },
+    { "id": "n3", "code": "protein_extraction", "position": { "x": 600, "y": 195 } },
+    { "id": "n4", "code": "cell_cryopreservation", "position": { "x": 600, "y": 75 } },
+    { "id": "n5", "code": "protein_denaturation", "position": { "x": 1110, "y": 135 } },
+    { "id": "n6", "code": "conditional_router", "position": { "x": 855, "y": 195 } },
+    { "id": "n7", "code": "loop_control", "position": { "x": 720, "y": 345 }, "ports_swapped": true }
+  ],
+  "edges": [
+    { "source": "n1", "target": "n2" },
+    { "source": "n2", "target": "n3" },
+    { "source": "n2", "target": "n4" },
+    { "source": "n3", "target": "n6" },
+    { "source": "n6", "target": "n5", "sourceHandle": "branch_success" },
+    { "source": "n6", "target": "n7", "sourceHandle": "branch_fail" },
+    { "source": "n7", "target": "n1" }
+  ]
+}

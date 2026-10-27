@@ -1,0 +1,12 @@
+{
+  "skill_name": "xactin-experiment-workflow-import",
+  "skill_version": "1.4.0",
+  "catalog_version": "2026.10.27+da930edd2195",
+  "updated_at": "2026-10-27",
+  "catalog_url": "https://raw.githubusercontent.com/XActin/xactin-experiment-workflow-import/main/nodes-catalog.json",
+  "version_url": "https://raw.githubusercontent.com/XActin/xactin-experiment-workflow-import/main/version.json",
+  "nodes_guide_en_url": "https://raw.githubusercontent.com/XActin/xactin-experiment-workflow-import/main/nodes-guide.en.md",
+  "nodes_config_guide_en_url": "https://raw.githubusercontent.com/XActin/xactin-experiment-workflow-import/main/nodes-config-guide.en.md",
+  "nodes_guide_url": "https://raw.githubusercontent.com/XActin/xactin-experiment-workflow-import/main/nodes-guide.md",
+  "nodes_config_guide_url": "https://raw.githubusercontent.com/XActin/xactin-experiment-workflow-import/main/nodes-config-guide.md"
+}

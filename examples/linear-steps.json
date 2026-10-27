@@ -1,0 +1,9 @@
+{
+  "steps": ["cell_revival", "cell_culture", "protein_extraction"],
+  "step_ids": ["n1", "n2", "n3"],
+  "step_positions": [
+    { "x": 90, "y": 180 },
+    { "x": 345, "y": 180 },
+    { "x": 600, "y": 195 }
+  ]
+}
