@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    {
+      "id": "n1",
+      "code": "cell_revival",
+      "position": { "x": 90, "y": 300 }
+    },
+    {
+      "id": "n2",
+      "code": "luciferase",
+      "position": { "x": 345, "y": 300 }
+    },
+    {
+      "id": "n3",
+      "code": "ligand_stimulus",
+      "position": { "x": 345, "y": 60 }
+    },
+    {
+      "id": "n4",
+      "code": "luciferase_quantitative_analysis",
+      "position": { "x": 600, "y": 300 }
+    }
+  ],
+  "edges": [
+    { "source": "n1", "target": "n2" },
+    {
+      "source": "n3",
+      "target": "n2",
+      "sourceHandle": "mount",
+      "targetHandle": "stimulus"
+    },
+    { "source": "n2", "target": "n4" }
+  ]
+}

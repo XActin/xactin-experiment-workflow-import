@@ -37,6 +37,12 @@ Start at `(100, 100)`. Each step adds about 250 to `x`. Keep `y` the same.
 - Set `"ports_swapped": true` on `loop_control` (or the other node that connects backward).
 - Put the target to the left or above, so the return edge leaves from the left and meets the target's input side.
 
+### Ligand mount
+
+- Place `ligand_stimulus` directly above or below the host (same `x`, offset by about one row height).
+- Edge: `source` is the stimulus, `target` is the host; `sourceHandle: "mount"`, `targetHandle: "stimulus"`.
+- Not part of the left/right material chain. One host may have several stimulus nodes (nudge them left/right if needed).
+
 ## ports_swapped
 
 - Default: left is input, right is output.

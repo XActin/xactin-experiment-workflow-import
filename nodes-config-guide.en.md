@@ -288,6 +288,24 @@ The assistant should turn these fields into instructions for this specific exper
 | Virus volume per well | Enter a number | Yes | Unit: tube(s); Default: 1; Min: 1 | — |
 | Selection drug | Choose from the list | No | Puro-Puromycin | — |
 
+### Ligand Stimulus (`ligand_stimulus`)
+
+**Suggested order**
+1. Place and configure the host assay node (including its plate) first, then put this node above or below the host.
+2. Connect with a mount edge: ligand stimulus → host; set sourceHandle to "mount" and targetHandle to "stimulus". One host may have several ligand stimulus nodes.
+3. Choose a peptide or drug from the material library. If the peptide is missing, order it first on the website under Synthesis order, then select it after it arrives in inventory.
+4. Choose the concentration unit and fill final concentrations only on wells the host already configured; leave a well empty to skip that well.
+5. Set the stimulus incubation time and save. This node is not part of the left/right material chain.
+
+**Form fields**
+
+| Field | How to fill it | Required | Options or limits | When it appears |
+|---|---|---|---|---|
+| Stimulus material | Choose from your material library; Select peptide or drug materials from inventory as stimulus | Yes | — | — |
+| Concentration unit | Choose from the list; Unit for per-well final concentrations | Yes | M; mM; μM; nM; pM | — |
+| Per-well concentration matrix | Enter final stimulus concentration on each host-configured well; Read the attached host assay plate layout; enter final stimulus concentr… | Yes | — | — |
+| Stimulus incubation time | Enter a number; Incubation after stimulus until assay readout | Yes | Unit: h; Default: 24; Min: 0.5; Max: 168 | — |
+
 ### Dual-Luciferase Reporter Assay (`luciferase`)
 
 **Suggested order**

@@ -37,6 +37,12 @@
 - `loop_control`（或其它回连节点）设 `"ports_swapped": true`。
 - 回连目标放在左侧或上方，回边从左出（交换后）连到目标输入侧，减少绕线。
 
+### 配体挂载
+
+- `ligand_stimulus` 放在宿主节点正上方或正下方（同一列 `x`，上下错开约一个行高）。
+- 边：`source` = 配体刺激，`target` = 宿主；`sourceHandle: "mount"`，`targetHandle: "stimulus"`。
+- 不参与左右物料主链；一个宿主可挂多个配体刺激节点（可左右略微错开）。
+
 ## ports_swapped
 
 - 默认：左 = 输入，右 = 输出。

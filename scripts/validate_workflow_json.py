@@ -132,6 +132,23 @@ def main():
             continue
         sm = meta.get(src["code"]) or {}
         tm = meta.get(tgt["code"]) or {}
+        host_compat = sm.get("host_compatibility") or []
+        stim_compat = tm.get("stimulus_compatibility") or []
+        is_ligand_mount = (
+            src["code"] == "ligand_stimulus"
+            or e.get("sourceHandle") == "mount"
+            or e.get("targetHandle") == "stimulus"
+        )
+        if is_ligand_mount:
+            if host_compat and tgt["code"] not in host_compat:
+                warnings.append(
+                    f'{src["code"]} -> {tgt["code"]}: host not in ligand host_compatibility'
+                )
+            if stim_compat and src["code"] not in stim_compat:
+                warnings.append(
+                    f'{src["code"]} -> {tgt["code"]}: stimulus not in host stimulus_compatibility'
+                )
+            continue
         down = sm.get("downstream_compatibility") or []
         up = tm.get("upstream_compatibility") or []
         if down and tgt["code"] not in down:

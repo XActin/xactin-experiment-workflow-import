@@ -41,10 +41,11 @@ If an address does not open, keep using the files in this folder and tell the us
 
 ## How to choose nodes and write JSON
 
-1. Clarify the experiment goal, the cells or materials, and whether there is a branch or a repeat.
+1. Clarify the experiment goal, the cells or materials, and whether there is a branch, a repeat, or a ligand stimulus.
 2. Choose nodes from `nodes-guide.en.md`. In the reply, name nodes in English.
 3. Every `code` must exist in the catalog. Connect only compatible upstream and downstream nodes.
 4. When there is a branch or a loop, set coordinates on a 15-pixel grid. For a connection that loops back, set `"ports_swapped": true` on the loop node so the input and output handles swap sides.
+5. For ligand stimulus (`ligand_stimulus`), mount onto a host listed in `host_compatibility`. Place the stimulus above or below the host. The edge goes **stimulus → host** with `"sourceHandle": "mount"` and `"targetHandle": "stimulus"`. Do not treat it as a left/right material link. One host may have several stimulus nodes.
 
 Use this shape when there is a branch or a loop:
 
@@ -61,6 +62,25 @@ Use this shape when there is a branch or a loop:
 }
 ```
 
+Ligand mount example:
+
+```json
+{
+  "nodes": [
+    { "id": "n_host", "code": "luciferase", "position": { "x": 600, "y": 300 } },
+    { "id": "n_lig", "code": "ligand_stimulus", "position": { "x": 600, "y": 60 } }
+  ],
+  "edges": [
+    {
+      "source": "n_lig",
+      "target": "n_host",
+      "sourceHandle": "mount",
+      "targetHandle": "stimulus"
+    }
+  ]
+}
+```
+
 A single straight chain with no branches may use `steps` plus `step_positions`.
 Do not put materials or volumes into the JSON of an ordinary node. The website does not import those values. Write rules into the JSON only for conditional routing and loop control, and only when the user asks for those rules.
 
@@ -70,11 +90,11 @@ Layout details are in [reference-layout.en.md](reference-layout.en.md). Examples
 
 When you give JSON, or when the user asks how to fill a node:
 
-1. Walk the flow from upstream to downstream.
+1. Walk the flow from upstream to downstream. Cover ligand mounts after their host node is clear.
 2. Open that node's section in `nodes-config-guide.en.md`.
 3. For this experiment, say what each required field should contain: which cells, which medium, which plasmid, how long to culture, and what to measure. Do not only repeat the field names.
 4. For each node, say where to click on the canvas, what the required fields should say, and which upstream node supplies the sample.
-5. For conditional routing, explain how each branch is decided. For a loop, explain the repeat count and range.
+5. For conditional routing, explain how each branch is decided. For a loop, explain the repeat count and range. For ligand stimulus, name the host, the peptide or drug, the concentration unit, which wells get a value, and the incubation time. If the peptide is not in inventory yet, tell the user they can order it under **Synthesis order** on the website, then select it after it arrives.
 6. When there are many nodes, explain the whole flow first, then the first few nodes in detail, and ask whether to continue.
 
 The reply includes both the JSON and how to fill each relevant node.
@@ -123,10 +143,11 @@ JSON 只带上节点种类、位置和连线。材料、用量、孔板、时间
 
 ## 怎么选节点、怎么写 JSON
 
-1. 问清实验目的、用什么细胞或材料、要不要分支或重复。  
+1. 问清实验目的、用什么细胞或材料、要不要分支、重复或配体刺激。  
 2. 对照 `nodes-guide.md` 选型。回复里用**中文节点名**把流程讲清楚。  
 3. JSON 里的 `code` 必须是目录里有的代码；能接上的上下游才连。  
-4. 有分支或回头连线时写上坐标（15 的倍数）。循环往回连时，循环节点写 `"ports_swapped": true`，输入输出圆点对调后更好认。
+4. 有分支或回头连线时写上坐标（15 的倍数）。循环往回连时，循环节点写 `"ports_swapped": true`，输入输出圆点对调后更好认。  
+5. 配体刺激（`ligand_stimulus`）挂到 `host_compatibility` 列出的宿主上。节点放在宿主上方或下方；边方向为 **配体刺激 → 宿主**，并写 `"sourceHandle": "mount"`、`"targetHandle": "stimulus"`。不要当成左右物料连线。一个宿主可以挂多个配体刺激。
 
 有分支或循环时用这种写法：
 
@@ -143,6 +164,25 @@ JSON 只带上节点种类、位置和连线。材料、用量、孔板、时间
 }
 ```
 
+配体挂载示例：
+
+```json
+{
+  "nodes": [
+    { "id": "n_host", "code": "luciferase", "position": { "x": 600, "y": 300 } },
+    { "id": "n_lig", "code": "ligand_stimulus", "position": { "x": 600, "y": 60 } }
+  ],
+  "edges": [
+    {
+      "source": "n_lig",
+      "target": "n_host",
+      "sourceHandle": "mount",
+      "targetHandle": "stimulus"
+    }
+  ]
+}
+```
+
 只有一条直线、没有分支时，可以写成 `steps` 加 `step_positions`。  
 不要把材料、体积写进普通节点的 JSON（网站导入时不会带上）。只有条件路由、循环控制，用户明确要求时才写入规则。
 
@@ -152,11 +192,11 @@ JSON 只带上节点种类、位置和连线。材料、用量、孔板、时间
 
 给出 JSON，或用户问「这个节点怎么填」时：
 
-1. 按流程从上游讲到下游。  
+1. 按流程从上游讲到下游；配体挂载在宿主节点讲清楚后再讲。  
 2. 打开该节点在 `nodes-config-guide.md` 里的一节。  
 3. 按**这次实验**说明每个必填项填什么，例如用哪种细胞、哪种培养基、哪份质粒、共培养多久、检测哪一项。不要只念字段名称。  
 4. 每个节点至少说明：在画布上点哪里打开、必填项写什么、样本从哪一个上游节点里选。  
-5. 条件路由要讲清每条分支怎么判断；循环要讲清重复次数和范围。  
+5. 条件路由要讲清每条分支怎么判断；循环要讲清重复次数和范围。配体刺激要讲清挂哪个宿主、选哪份肽段或药物、浓度单位、哪些孔填终浓度、处理多久。若库存还没有所需肽段，可提醒用户先到网站「合成订购」定制，入库后再选。  
 6. 节点很多时，先讲清整条流程，再细讲前几步，并问用户要不要继续讲后面的节点。
 
 回复里同时给出 JSON，以及每个相关节点的参数怎么填。

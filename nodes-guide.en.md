@@ -2,6 +2,7 @@
 
 Choose a node from what it does, when to use it, and what you get.
 Import JSON must use the `code`. Connect nodes according to the usual upstream and downstream lists.
+Ligand stimulus mounts onto a host assay with a separate top/bottom port; see `host_compatibility` / `stimulus_compatibility`.
 
 After import, fill each form using [nodes-config-guide.en.md](nodes-config-guide.en.md).
 
@@ -69,17 +70,19 @@ After import, fill each form using [nodes-config-guide.en.md](nodes-config-guide
 - **Type:** Experiment step
 - **What it does:** Run BrdU incorporation on a 24-well plate; set cells/well and configure well cell materials.
 - **When to use it:** Use this when the experiment includes BrdU Incorporation Assay.
-- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `brdu_edu_quantification`.
+- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `brdu_edu_quantification`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **Usual downstream:** `cell_culture`, `brdu_edu_quantification`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### Cell Co-culture (`cell_co_culture`)
 - **Type:** Experiment step
 - **What it does:** Multi-cell co-culture with per-well cell types/quantities, duration and medium.
 - **When to use it:** Use this when the experiment includes Cell Co-culture.
-- **What you get:** The product of this step. It can usually continue to: `elisa_detection`, `plate_reader_luminescence`.
+- **What you get:** The product of this step. It can usually continue to: `elisa_detection`, `plate_reader_luminescence`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_revival`, `cell_culture`, `transient_transfection`, `lentivirus_transduction_gene`
 - **Usual downstream:** `elisa_detection`, `plate_reader_luminescence`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### Cell Cryopreservation (`cell_cryopreservation`)
 - **Type:** Experiment step
@@ -107,9 +110,10 @@ After import, fill each form using [nodes-config-guide.en.md](nodes-config-guide
 - **Type:** Experiment step
 - **What it does:** Run EdU incorporation on a 24-well plate; set cells/well and configure well cell materials.
 - **When to use it:** Use this when the experiment includes EdU Incorporation Assay.
-- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `brdu_edu_quantification`.
+- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `brdu_edu_quantification`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **Usual downstream:** `cell_culture`, `brdu_edu_quantification`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### Lentiviral Packaging (Three-Plasmid) (`lentiviral_transduction`)
 - **Type:** Experiment step
@@ -142,21 +146,30 @@ After import, fill each form using [nodes-config-guide.en.md](nodes-config-guide
 - **Usual upstream:** `cell_revival`, `cell_culture`, `lentiviral_transduction`, `lentiviral_transduction_two_plasmid`, `transient_transfection`, `lentivirus_transduction_gene`
 - **Usual downstream:** `cell_culture`, `cell_cryopreservation`, `protein_extraction`, `plate_cloning`, `mtt`, `transwell`, `brdu`, `edu`, `lentivirus_transduction_gene`
 
+### Ligand Stimulus (`ligand_stimulus`)
+- **Type:** Experiment step
+- **What it does:** Attach to a host assay node with a configured plate; select peptide (or future compound) from inventory and set per-well final concentrations.
+- **When to use it:** Use this when a host assay needs a peptide or drug stimulus with per-well final concentrations. Mount it on the top/bottom ligand port; it is not part of the left/right material chain.
+- **What you get:** A per-well stimulus plan attached to a host assay. Compatible hosts: `luciferase`, `mtt`, `plate_cloning`, `brdu`, `edu`, `transwell`, `qpcr`, `cell_co_culture` and others.
+- **Compatible hosts:** `luciferase`, `mtt`, `plate_cloning`, `brdu`, `edu`, `transwell`, `qpcr`, `cell_co_culture`, `elisa_detection`, `plate_reader_luminescence`
+
 ### Dual-Luciferase Reporter Assay (`luciferase`)
 - **Type:** Experiment step
 - **What it does:** 96-well dual-luciferase reporter assay with per-well plasmid configuration.
 - **When to use it:** Use this when the experiment includes Dual-Luciferase Reporter Assay.
-- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `luciferase_quantitative_analysis`.
+- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `luciferase_quantitative_analysis`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_revival`, `cell_culture`, `plasmid_extraction`
 - **Usual downstream:** `cell_culture`, `luciferase_quantitative_analysis`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### Cell Viability/Proliferation Assay (MTT) (`mtt`)
 - **Type:** Experiment step
 - **What it does:** MTT assay on a 96-well plate: cells/well, assay days, and well cell materials.
 - **When to use it:** Use this when the experiment includes Cell Viability/Proliferation Assay (MTT).
-- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `mtt_quantification`.
+- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `mtt_quantification`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **Usual downstream:** `cell_culture`, `mtt_quantification`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### Plasmid Amplification Culture (`plasmid_amplification`)
 - **Type:** Experiment step
@@ -170,9 +183,10 @@ After import, fill each form using [nodes-config-guide.en.md](nodes-config-guide
 - **Type:** Experiment step
 - **What it does:** Colony formation on a 6-well plate: set cells/well, culture days, and upstream cell material per well.
 - **When to use it:** Use this when the experiment includes Colony Formation Assay.
-- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `plate_cloning_quantification`.
+- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `plate_cloning_quantification`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **Usual downstream:** `cell_culture`, `plate_cloning_quantification`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### Strain Cryopreservation (`strain_cryopreservation`)
 - **Type:** Experiment step
@@ -201,9 +215,10 @@ After import, fill each form using [nodes-config-guide.en.md](nodes-config-guide
 - **Type:** Experiment step
 - **What it does:** Transwell assay on a 24-well plate: optional Matrigel, cells/well, and upstream cell materials.
 - **When to use it:** Use this when the experiment includes Migration/Invasion Assay (Transwell).
-- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `transwell_quantification`.
+- **What you get:** The product of this step. It can usually continue to: `cell_culture`, `transwell_quantification`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **Usual downstream:** `cell_culture`, `transwell_quantification`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ## Control Flow
 
@@ -308,9 +323,10 @@ Note: if Flag-tagged, include the tag sequence when designing.
 - **Type:** Experiment step
 - **What it does:** qPCR using cDNA templates and primers with a user-defined amplification program on a 96-well plate.
 - **When to use it:** Use this when the experiment includes Quantitative Real-Time PCR (qPCR).
-- **What you get:** The product of this step. It can usually continue to: `qpcr_quantification`.
+- **What you get:** The product of this step. It can usually continue to: `qpcr_quantification`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `rt_pcr`, `nucleotide_synthesis`
 - **Usual downstream:** `qpcr_quantification`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### RNA Immunoprecipitation Sequencing (RIP-seq) (`rip_seq`)
 - **Type:** Experiment step
@@ -342,16 +358,18 @@ Note: if Flag-tagged, include the tag sequence when designing.
 - **Type:** Experiment step
 - **What it does:** Configure ELISA on a 96-well plate: pick upstream co-culture wells as samples and set analyte/detection parameters.
 - **When to use it:** Use this when the experiment includes ELISA Assay.
-- **What you get:** The product of this step. It can usually continue to: `elisa_quantification`.
+- **What you get:** The product of this step. It can usually continue to: `elisa_quantification`. Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_co_culture`
 - **Usual downstream:** `elisa_quantification`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### Plate Reader Luminescence (`plate_reader_luminescence`)
 - **Type:** Experiment step
 - **What it does:** Luminescence readout on upstream co-culture 96-well plate; optional per-well luminescence substrate.
 - **When to use it:** Use this when the experiment includes Plate Reader Luminescence.
-- **What you get:** The product of this step. In the current list this is often an end step, or it continues to a result-analysis node.
+- **What you get:** Supports ligand mount: `ligand_stimulus`.
 - **Usual upstream:** `cell_co_culture`
+- **Supports ligand mount:** `ligand_stimulus`
 
 ### Protein Denaturation (`protein_denaturation`)
 - **Type:** Experiment step

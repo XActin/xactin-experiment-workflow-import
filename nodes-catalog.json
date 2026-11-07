@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
-  "catalog_version": "2026.10.27+da930edd2195",
-  "generated_at": "2026-10-27T14:37:21Z",
+  "catalog_version": "2026.11.07+b5ac90a80f6b",
+  "generated_at": "2026-11-07T14:33:01Z",
   "source": "XActin 当前可用实验节点",
   "how_to_read_a_node": {
     "name": "中文显示名",
@@ -13,6 +13,8 @@
     "config_fields": "表单字段明细：label/how/required/options/visible_when",
     "upstream_compatibility": "允许接在哪些上游 code 之后（非空则尽量遵守）",
     "downstream_compatibility": "常可接到哪些下游 code（非空则尽量遵守）",
+    "host_compatibility": "配体刺激节点可挂到哪些宿主 code（仅 ligand_stimulus）",
+    "stimulus_compatibility": "宿主节点支持挂载哪些配体类 code",
     "role": "experiment=实验步骤, control=控制流, analysis=结果分析"
   },
   "layout_defaults": {
@@ -33,9 +35,15 @@
       "loop_control"
     ],
     "ports_swapped_field": "ports_swapped",
+    "ligand_mount": {
+      "edge_direction": "ligand_stimulus -> host",
+      "sourceHandle": "mount",
+      "targetHandle": "stimulus",
+      "note": "配体刺激不走左右物料主链；用上下配体接口挂载。一个宿主可挂多个配体刺激。"
+    },
     "after_import": "导入后按配置说明，告诉用户每个节点怎么填。"
   },
-  "node_count": 45,
+  "node_count": 46,
   "nodes": [
     {
       "code": "next_generation_sequencing",
@@ -992,7 +1000,7 @@
       "role": "experiment",
       "what_it_does": "实时荧光定量 PCR（qPCR）：基于 cDNA 模板与上下游引物，按用户设定的扩增程序在 96 孔板中开展定量扩增。",
       "use_when": "实验方案里需要包含「实时荧光定量 PCR（qPCR）」这一步时（分类：分子生物学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`qpcr_quantification`",
+      "what_you_get": "本步实验产出，常见可继续接到：`qpcr_quantification`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「实时荧光定量 PCR（qPCR）」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「qPCR 扩增程序设定」。",
@@ -1035,7 +1043,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 2,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "rip_seq",
@@ -1876,7 +1887,7 @@
       "role": "experiment",
       "what_it_does": "在24孔板中进行 BrdU 掺入实验，设置每孔细胞数量并配置孔位细胞材料。",
       "use_when": "实验方案里需要包含「BrdU掺入实验」这一步时（分类：细胞生物学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`brdu_edu_quantification`",
+      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`brdu_edu_quantification`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「BrdU掺入实验」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「每孔细胞数量」。",
@@ -1922,7 +1933,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 2,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "cell_co_culture",
@@ -1933,7 +1947,7 @@
       "role": "experiment",
       "what_it_does": "多细胞共培养：按孔板配置各孔细胞种类与数量，设定共培养时间与培养基。",
       "use_when": "实验方案里需要包含「细胞共培养」这一步时（分类：细胞生物学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`elisa_detection`、`plate_reader_luminescence`",
+      "what_you_get": "本步实验产出，常见可继续接到：`elisa_detection`、`plate_reader_luminescence`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「细胞共培养」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「培养皿类型」、「孔板细胞配置」、「共培养时间」、「培养基类型」、「胎牛血清（FBS）」、「L-谷氨酰胺」、「青霉素-链霉素」。",
@@ -2051,7 +2065,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 9,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "cell_cryopreservation",
@@ -2386,7 +2403,7 @@
       "role": "experiment",
       "what_it_does": "在24孔板中进行 EdU 掺入实验，设置每孔细胞数量并配置孔位细胞材料。",
       "use_when": "实验方案里需要包含「EdU掺入实验」这一步时（分类：细胞生物学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`brdu_edu_quantification`",
+      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`brdu_edu_quantification`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「EdU掺入实验」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「每孔细胞数量」。",
@@ -2432,7 +2449,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 2,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "lentiviral_transduction",
@@ -2784,6 +2804,88 @@
       "import_parameters_allowed": false
     },
     {
+      "code": "ligand_stimulus",
+      "name": "配体刺激",
+      "name_en": "Ligand Stimulus",
+      "category": "细胞生物学",
+      "category_en": "Cell Biology",
+      "role": "experiment",
+      "what_it_does": "挂接到已配置孔板的宿主实验节点，从库存选择肽段等刺激物，并按孔配置终浓度矩阵。",
+      "use_when": "当宿主检测/培养类节点需要肽段或药物等刺激物，并按孔设置终浓度时（从上/下配体接口挂载，不走左右物料主链）",
+      "what_you_get": "挂接到宿主实验节点后，为该宿主孔板提供按孔刺激方案。可挂接宿主：`luciferase`、`mtt`、`plate_cloning`、`brdu`、`edu`、`transwell`、`qpcr`、`cell_co_culture` 等",
+      "how_to_configure": [
+        "先放好并配置好宿主实验节点（孔板等），再把本节点放在宿主上方或下方。",
+        "用挂载边连接：配体刺激 → 宿主；边上写 sourceHandle: \"mount\"、targetHandle: \"stimulus\"。一个宿主可挂多个配体刺激节点。",
+        "从材料库选择肽段或药物作为刺激物；若库中没有所需肽段，可先在网站「合成订购」定制，入库后再选。",
+        "选择浓度单位，对照宿主已配置的孔填写按孔终浓度；空孔表示该孔不加本刺激物。",
+        "填写刺激处理时间并保存。本节点不参与左右物料主链。"
+      ],
+      "config_fields": [
+        {
+          "key": "stimulus_sample",
+          "label": "刺激物材料",
+          "type": "inventory_select",
+          "how": "从材料库选择",
+          "required": true,
+          "options": "",
+          "constraints": "",
+          "visible_when": "",
+          "hint": "从仓库选择肽段材料或药物材料作为刺激物"
+        },
+        {
+          "key": "concentration_unit",
+          "label": "浓度单位",
+          "type": "select",
+          "how": "下拉选择",
+          "required": true,
+          "options": "M；mM；μM；nM；pM",
+          "constraints": "默认：nM",
+          "visible_when": "",
+          "hint": "按孔矩阵中填写的终浓度单位"
+        },
+        {
+          "key": "well_concentration_matrix",
+          "label": "按孔浓度矩阵",
+          "type": "stimulus_well_matrix",
+          "how": "按宿主孔板填写各孔刺激终浓度",
+          "required": true,
+          "options": "",
+          "constraints": "",
+          "visible_when": "",
+          "hint": "读取所挂接宿主实验节点的孔板配置，仅可对宿主已配置的孔填写刺激终浓度；空孔表示该孔不加本刺激物。"
+        },
+        {
+          "key": "incubation_hours",
+          "label": "刺激处理时间",
+          "type": "number",
+          "how": "填写数字",
+          "required": true,
+          "options": "",
+          "constraints": "单位：小时；默认：24；最小：0.5；最大：168",
+          "visible_when": "",
+          "hint": "加刺激物后至检测前的处理时间"
+        }
+      ],
+      "upstream_compatibility": [],
+      "downstream_compatibility": [],
+      "layout_height_tier": "medium",
+      "approx_form_fields": 5,
+      "suggest_ports_swapped_for_loop_back": false,
+      "import_parameters_allowed": false,
+      "host_compatibility": [
+        "luciferase",
+        "mtt",
+        "plate_cloning",
+        "brdu",
+        "edu",
+        "transwell",
+        "qpcr",
+        "cell_co_culture",
+        "elisa_detection",
+        "plate_reader_luminescence"
+      ]
+    },
+    {
       "code": "luciferase",
       "name": "双荧光素酶报告实验",
       "name_en": "Dual-Luciferase Reporter Assay",
@@ -2792,7 +2894,7 @@
       "role": "experiment",
       "what_it_does": "基于96孔板的双荧光素酶报告实验，支持逐孔配置质粒方案。",
       "use_when": "实验方案里需要包含「双荧光素酶报告实验」这一步时（分类：细胞生物学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`luciferase_quantitative_analysis`",
+      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`luciferase_quantitative_analysis`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「双荧光素酶报告实验」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「细胞材料」、「每孔细胞数量」。",
@@ -2849,7 +2951,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 4,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "mtt",
@@ -2860,7 +2965,7 @@
       "role": "experiment",
       "what_it_does": "在96孔板进行MTT实验，配置每孔细胞数量、检测天数及孔位细胞材料。",
       "use_when": "实验方案里需要包含「细胞活力/增殖检测（MTT）」这一步时（分类：细胞生物学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`mtt_quantification`",
+      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`mtt_quantification`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「细胞活力/增殖检测（MTT）」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「每孔细胞数量」、「检测天数」。",
@@ -2918,7 +3023,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 3,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "plasmid_amplification",
@@ -3007,7 +3115,7 @@
       "role": "experiment",
       "what_it_does": "在六孔板上进行平板克隆实验：设置每孔细胞数量、培养天数，并为每孔选择使用的上游细胞材料。",
       "use_when": "实验方案里需要包含「平板克隆实验」这一步时（分类：细胞生物学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`plate_cloning_quantification`",
+      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`plate_cloning_quantification`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「平板克隆实验」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「每孔细胞数量」、「培养天数」。",
@@ -3065,7 +3173,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 3,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "strain_cryopreservation",
@@ -3277,7 +3388,7 @@
       "role": "experiment",
       "what_it_does": "在 24 孔板上进行 Transwell 迁移/侵袭检测：可选添加基质胶、设置每孔细胞数量、配置每孔使用的上游细胞材料。",
       "use_when": "实验方案里需要包含「迁移/侵袭检测（Transwell）」这一步时（分类：细胞生物学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`transwell_quantification`",
+      "what_you_get": "本步实验产出，常见可继续接到：`cell_culture`、`transwell_quantification`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「迁移/侵袭检测（Transwell）」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「每孔细胞数量」。",
@@ -3335,7 +3446,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 3,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "co_ip",
@@ -3424,7 +3538,7 @@
       "role": "experiment",
       "what_it_does": "在 96 孔板上配置 ELISA：点选上游共培养孔位作为样本，并设置靶标与检测参数。",
       "use_when": "实验方案里需要包含「ELISA检测」这一步时（分类：蛋白质学）",
-      "what_you_get": "本步实验产出，常见可继续接到：`elisa_quantification`",
+      "what_you_get": "本步实验产出，常见可继续接到：`elisa_quantification`；支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「ELISA检测」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「ELISA 96孔板配置」。",
@@ -3453,7 +3567,10 @@
       "layout_height_tier": "tall",
       "approx_form_fields": 3,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "plate_reader_luminescence",
@@ -3464,7 +3581,7 @@
       "role": "experiment",
       "what_it_does": "基于上游共培养 96 孔板进行酶标仪发光读数；可逐孔选择是否添加发光底物及底物种类。",
       "use_when": "实验方案里需要包含「酶标仪发光检测」这一步时（分类：蛋白质学）",
-      "what_you_get": "本步实验产出；在当前目录中多为流程终点，或需另接「检测分析」类节点",
+      "what_you_get": "支持配体挂载：`ligand_stimulus`",
       "how_to_configure": [
         "在画布上点击「酶标仪发光检测」节点，打开右侧/弹窗参数表单。",
         "先填必填项：「发光检测孔板配置」、「检测模式」、「积分时间」、「增益」、「加底物后孵育时间」。",
@@ -3539,7 +3656,10 @@
       "layout_height_tier": "medium",
       "approx_form_fields": 7,
       "suggest_ports_swapped_for_loop_back": false,
-      "import_parameters_allowed": false
+      "import_parameters_allowed": false,
+      "stimulus_compatibility": [
+        "ligand_stimulus"
+      ]
     },
     {
       "code": "protein_denaturation",

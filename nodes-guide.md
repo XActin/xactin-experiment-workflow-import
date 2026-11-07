@@ -1,7 +1,8 @@
 # XActin 实验节点一览
 
 根据你想做的实验，对照「做什么 / 何时用 / 能得到什么」选择节点。
-生成导入 JSON 时使用对应的 `code`，并尽量按「常见上游 / 常见下游」来连接。
+生成导入 JSON 时使用对应的 `code`，并尽量按常见上游、常见下游来连接。
+配体刺激通过上下「配体接口」挂到宿主实验节点，见「可挂接宿主 / 支持配体挂载」，不走左右物料主链。
 
 导入画布之后，各节点表单怎么填，请看 [nodes-config-guide.md](nodes-config-guide.md)。
 
@@ -80,9 +81,10 @@
 - **类型**：实验步骤
 - **做什么**：实时荧光定量 PCR（qPCR）：基于 cDNA 模板与上下游引物，按用户设定的扩增程序在 96 孔板中开展定量扩增。
 - **何时选用**：实验方案里需要包含「实时荧光定量 PCR（qPCR）」这一步时（分类：分子生物学）
-- **能得到什么**：本步实验产出，常见可继续接到：`qpcr_quantification`
+- **能得到什么**：本步实验产出，常见可继续接到：`qpcr_quantification`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`rt_pcr`, `nucleotide_synthesis`
 - **常见下游**：`qpcr_quantification`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### RNA 免疫沉淀测序（RIP-seq）（`rip_seq`）
 - **类型**：实验步骤
@@ -190,17 +192,19 @@
 - **类型**：实验步骤
 - **做什么**：在24孔板中进行 BrdU 掺入实验，设置每孔细胞数量并配置孔位细胞材料。
 - **何时选用**：实验方案里需要包含「BrdU掺入实验」这一步时（分类：细胞生物学）
-- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`brdu_edu_quantification`
+- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`brdu_edu_quantification`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **常见下游**：`cell_culture`, `brdu_edu_quantification`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### 细胞共培养（`cell_co_culture`）
 - **类型**：实验步骤
 - **做什么**：多细胞共培养：按孔板配置各孔细胞种类与数量，设定共培养时间与培养基。
 - **何时选用**：实验方案里需要包含「细胞共培养」这一步时（分类：细胞生物学）
-- **能得到什么**：本步实验产出，常见可继续接到：`elisa_detection`、`plate_reader_luminescence`
+- **能得到什么**：本步实验产出，常见可继续接到：`elisa_detection`、`plate_reader_luminescence`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_revival`, `cell_culture`, `transient_transfection`, `lentivirus_transduction_gene`
 - **常见下游**：`elisa_detection`, `plate_reader_luminescence`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### 细胞冻存（`cell_cryopreservation`）
 - **类型**：实验步骤
@@ -228,9 +232,10 @@
 - **类型**：实验步骤
 - **做什么**：在24孔板中进行 EdU 掺入实验，设置每孔细胞数量并配置孔位细胞材料。
 - **何时选用**：实验方案里需要包含「EdU掺入实验」这一步时（分类：细胞生物学）
-- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`brdu_edu_quantification`
+- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`brdu_edu_quantification`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **常见下游**：`cell_culture`, `brdu_edu_quantification`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### 慢病毒包装（三质粒系统）（`lentiviral_transduction`）
 - **类型**：实验步骤
@@ -263,21 +268,30 @@
 - **常见上游**：`cell_revival`, `cell_culture`, `lentiviral_transduction`, `lentiviral_transduction_two_plasmid`, `transient_transfection`, `lentivirus_transduction_gene`
 - **常见下游**：`cell_culture`, `cell_cryopreservation`, `protein_extraction`, `plate_cloning`, `mtt`, `transwell`, `brdu`, `edu`, `lentivirus_transduction_gene`
 
+### 配体刺激（`ligand_stimulus`）
+- **类型**：实验步骤
+- **做什么**：挂接到已配置孔板的宿主实验节点，从库存选择肽段等刺激物，并按孔配置终浓度矩阵。
+- **何时选用**：当宿主检测/培养类节点需要肽段或药物等刺激物，并按孔设置终浓度时（从上/下配体接口挂载，不走左右物料主链）
+- **能得到什么**：挂接到宿主实验节点后，为该宿主孔板提供按孔刺激方案。可挂接宿主：`luciferase`、`mtt`、`plate_cloning`、`brdu`、`edu`、`transwell`、`qpcr`、`cell_co_culture` 等
+- **可挂接宿主**：`luciferase`, `mtt`, `plate_cloning`, `brdu`, `edu`, `transwell`, `qpcr`, `cell_co_culture`, `elisa_detection`, `plate_reader_luminescence`
+
 ### 双荧光素酶报告实验（`luciferase`）
 - **类型**：实验步骤
 - **做什么**：基于96孔板的双荧光素酶报告实验，支持逐孔配置质粒方案。
 - **何时选用**：实验方案里需要包含「双荧光素酶报告实验」这一步时（分类：细胞生物学）
-- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`luciferase_quantitative_analysis`
+- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`luciferase_quantitative_analysis`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_revival`, `cell_culture`, `plasmid_extraction`
 - **常见下游**：`cell_culture`, `luciferase_quantitative_analysis`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### 细胞活力/增殖检测（MTT）（`mtt`）
 - **类型**：实验步骤
 - **做什么**：在96孔板进行MTT实验，配置每孔细胞数量、检测天数及孔位细胞材料。
 - **何时选用**：实验方案里需要包含「细胞活力/增殖检测（MTT）」这一步时（分类：细胞生物学）
-- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`mtt_quantification`
+- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`mtt_quantification`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **常见下游**：`cell_culture`, `mtt_quantification`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### 质粒扩增培养（`plasmid_amplification`）
 - **类型**：实验步骤
@@ -291,9 +305,10 @@
 - **类型**：实验步骤
 - **做什么**：在六孔板上进行平板克隆实验：设置每孔细胞数量、培养天数，并为每孔选择使用的上游细胞材料。
 - **何时选用**：实验方案里需要包含「平板克隆实验」这一步时（分类：细胞生物学）
-- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`plate_cloning_quantification`
+- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`plate_cloning_quantification`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **常见下游**：`cell_culture`, `plate_cloning_quantification`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### 菌种冻存（`strain_cryopreservation`）
 - **类型**：实验步骤
@@ -322,9 +337,10 @@
 - **类型**：实验步骤
 - **做什么**：在 24 孔板上进行 Transwell 迁移/侵袭检测：可选添加基质胶、设置每孔细胞数量、配置每孔使用的上游细胞材料。
 - **何时选用**：实验方案里需要包含「迁移/侵袭检测（Transwell）」这一步时（分类：细胞生物学）
-- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`transwell_quantification`
+- **能得到什么**：本步实验产出，常见可继续接到：`cell_culture`、`transwell_quantification`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_culture`, `cell_revival`, `transient_transfection`, `lentivirus_transduction_gene`
 - **常见下游**：`cell_culture`, `transwell_quantification`
+- **支持配体挂载**：`ligand_stimulus`
 
 ## 蛋白质学
 
@@ -340,16 +356,18 @@
 - **类型**：实验步骤
 - **做什么**：在 96 孔板上配置 ELISA：点选上游共培养孔位作为样本，并设置靶标与检测参数。
 - **何时选用**：实验方案里需要包含「ELISA检测」这一步时（分类：蛋白质学）
-- **能得到什么**：本步实验产出，常见可继续接到：`elisa_quantification`
+- **能得到什么**：本步实验产出，常见可继续接到：`elisa_quantification`；支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_co_culture`
 - **常见下游**：`elisa_quantification`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### 酶标仪发光检测（`plate_reader_luminescence`）
 - **类型**：实验步骤
 - **做什么**：基于上游共培养 96 孔板进行酶标仪发光读数；可逐孔选择是否添加发光底物及底物种类。
 - **何时选用**：实验方案里需要包含「酶标仪发光检测」这一步时（分类：蛋白质学）
-- **能得到什么**：本步实验产出；在当前目录中多为流程终点，或需另接「检测分析」类节点
+- **能得到什么**：支持配体挂载：`ligand_stimulus`
 - **常见上游**：`cell_co_culture`
+- **支持配体挂载**：`ligand_stimulus`
 
 ### 蛋白变性（`protein_denaturation`）
 - **类型**：实验步骤
